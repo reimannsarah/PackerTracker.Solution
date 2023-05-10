@@ -7,24 +7,32 @@ namespace PackerTracker.Controllers
   public class FoodController : Controller
   {
 
+    [HttpGet("/food")]
+    public ActionResult Index()
+    {
+      List<Food> allFoods = Food.GetList();
+      return View(allFoods);
+    }
+
     [HttpGet("/food/new")]
     public ActionResult New()
     {
       return View();
     }
 
-    // [HttpGet("/food/new")]
-    // public ActionResult New()
-    // {
-    //   return View();
-    // }
+    [HttpPost("/food")]
+    public ActionResult Create(string name, float weight, float price, bool purchasedStatus, bool packedStatus, string category)
+    {
+      Food newFood = new Food(name, weight, price, purchasedStatus, packedStatus, category);
+      return RedirectToAction("Index");
+    }
 
-    // [HttpPost("/food")]
-    // public ActionResult Create(string description)
-    // {
-    //   Item myItem = new Item(description);
-    //   return RedirectToAction("Index");
-    // }
+    [HttpGet("/food/{id}")]
+    public ActionResult Show(int id)
+    {
+      Food foundFood = Food.Find(id);
+      return View("Index", foundFood);
+    }
 
     // [HttpPost("/food/delete")]
     // public ActionResult DeleteAll()

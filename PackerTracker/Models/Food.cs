@@ -7,9 +7,11 @@ namespace PackerTracker.Models
   {
     public DateOnly ExpirationDate;
     public string Category { get; set; }
-    private static List<Food> _instances = new List<Food> {};
+    public int Id { get; }
+    private static List<Food> _instances = new List<Food> { };
 
-    public enum CategoryType {
+    public enum CategoryType
+    {
       Snack,
       Breakfast,
       Lunch,
@@ -17,20 +19,26 @@ namespace PackerTracker.Models
       Drink
     }
 
-    public Food(string name, int weight, int price, bool purchasedStat, bool packedStat, string category)
+    public Food(string name, float weight, float price, bool purchasedStatus, bool packedStatus, string category)
     {
       Name = name;
       Weight = weight;
       Price = price;
-      PurchaseStatus = purchasedStat;
-      PackedStatus = packedStat;
+      PurchaseStatus = purchasedStatus;
+      PackedStatus = packedStatus;
       Category = category;
       _instances.Add(this);
+      Id = _instances.Count;
     }
 
     public DateOnly SetDate(int year, int month, int day)
     {
       return ExpirationDate = new DateOnly(year, month, day);
+    }
+
+    public static Food Find(int searchID)
+    {
+      return _instances[searchID - 1];
     }
 
     public static void ClearList()
