@@ -30,7 +30,7 @@ namespace PackerTracker.Controllers
     [HttpGet("/food/{id}")]
     public ActionResult Show(int id)
     {
-      Food foundFood = Food.Find(id);
+      Gear foundFood = Gear.Find(id);
       return View(foundFood);
     }
 

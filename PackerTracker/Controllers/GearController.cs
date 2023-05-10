@@ -7,12 +7,12 @@ namespace PackerTracker.Controllers
   public class GearController : Controller
   {
 
-    // [HttpGet("/gear")]
-    // public ActionResult Index()
-    // {
-    //   List<Item> allgear = Item.GetAll();
-    //   return View(allgear);
-    // }
+    [HttpGet("/gear")]
+    public ActionResult Index()
+    {
+      List<Gear> allGear = Gear.GetGear();
+      return View(allGear);
+    }
 
     // [HttpGet("/gear/new")]
     // public ActionResult New()
@@ -34,11 +34,11 @@ namespace PackerTracker.Controllers
     //   return View();
     // }
 
-    // [HttpGet("/gear/{id}")]
-    // public ActionResult Show(int id)
-    // {
-    //   Item foundItem = Item.Find(id);
-    //   return View(foundItem);
-    // }
+    [HttpGet("/gear/{id}")]
+    public ActionResult Show(int id)
+    {
+      Gear foundGear = Gear.Find(id);
+      return View(foundGear);
+    }
   }
 }
