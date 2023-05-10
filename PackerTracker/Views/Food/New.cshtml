@@ -22,12 +22,6 @@
     <label for="price">How much does it cost ($)?</label>
     <input id="price" name="price" type="number" step="0.01" value="0.00" placeholder="0.00" min="0.00">
     <br>
-    <label for="purchaseStatus">Is it purchased yet?!</label>
-    <input id="purchaseStatus" name="purchaseStatus" type="checkbox">
-    <br>
-    <label for="packedStatus">Did you pack it yet?!</label>
-    <input id="packedStatus" name="packedStatus" type="checkbox">
-    <br>
     <label for="category">Food Category:</label>
     <select id="category" name="category" type="dropdown">
       @foreach (string category in Enum.GetNames<Food.CategoryType>())

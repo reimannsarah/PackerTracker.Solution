@@ -21,9 +21,9 @@ namespace PackerTracker.Controllers
     }
 
     [HttpPost("/food")]
-    public ActionResult Create(string name, float weight, float price, bool purchasedStatus, bool packedStatus, string category)
+    public ActionResult Create(string name, float weight, float price, string category)
     {
-      Food newFood = new Food(name, weight, price, purchasedStatus, packedStatus, category);
+      Food newFood = new Food(name, weight, price, category);
       return RedirectToAction("Index");
     }
 
@@ -31,7 +31,7 @@ namespace PackerTracker.Controllers
     public ActionResult Show(int id)
     {
       Food foundFood = Food.Find(id);
-      return View("Index", foundFood);
+      return View(foundFood);
     }
 
     // [HttpPost("/food/delete")]

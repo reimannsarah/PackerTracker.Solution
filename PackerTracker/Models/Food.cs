@@ -19,13 +19,11 @@ namespace PackerTracker.Models
       Drink
     }
 
-    public Food(string name, float weight, float price, bool purchasedStatus, bool packedStatus, string category)
+    public Food(string name, float weight, float price, string category)
     {
       Name = name;
       Weight = weight;
       Price = price;
-      PurchaseStatus = purchasedStatus;
-      PackedStatus = packedStatus;
       Category = category;
       _instances.Add(this);
       Id = _instances.Count;
