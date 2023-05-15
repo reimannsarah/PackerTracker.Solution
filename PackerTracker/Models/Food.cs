@@ -43,8 +43,8 @@ namespace PackerTracker.Models
       }
       else
       {
-        Food newFood = (Food) otherFood;
-        bool nameEquality = (this.Name == newFood.Name && this.Weight == newFood.Weight && this.Price == newFood.Price && this.Category == newFood.Category);
+        Food newFood = (Food)otherFood;
+        bool nameEquality = (this.Name == newFood.Name && this.Weight == newFood.Weight && this.Price == newFood.Price && this.Category == newFood.Category && this.Id == newFood.Id);
         return nameEquality;
       }
     }
@@ -61,8 +61,33 @@ namespace PackerTracker.Models
 
     public static Food Find(int searchID)
     {
-      Food placeholderFood = new Food("scurge", 8, 35, "snack");
-      return placeholderFood;
+      MySqlConnection conn = new MySqlConnection(DBConfiguration.ConnectionString);
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = "SELECT * FROM food WHERE id = @ThisId";
+      cmd.Parameters.AddWithValue("@ThisId", searchID);
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int foodId = 0;
+      string name = "";
+      float weight = 0;
+      float price = 0;
+      string category = "";
+      while (rdr.Read())
+      {
+        foodId = rdr.GetInt32(0);
+        name = rdr.GetString(1);
+        weight = rdr.GetFloat(2);
+        price = rdr.GetFloat(3);
+        category = rdr.GetString(4);
+      }
+      Food foundFood = new Food(name, weight, price, category, foodId);
+      
+      conn.Close();
+      if(conn!=null)
+      {
+        conn.Dispose();
+      }
+      return foundFood;
     }
 
     public static void ClearList()
@@ -93,8 +118,8 @@ namespace PackerTracker.Models
       {
         int foodId = rdr.GetInt32(0);
         string name = rdr.GetString(1);
-        int weight = rdr.GetInt32(2);
-        int price = rdr.GetInt32(3);
+        float weight = (float)rdr.GetDecimal(2);
+        float price = (float)rdr.GetDecimal(3);
         string category = rdr.GetString(4);
         Food newFood = new Food(name, weight, price, category, foodId);
         allFood.Add(newFood);
@@ -107,6 +132,26 @@ namespace PackerTracker.Models
       return allFood;
     }
 
+    public void Save()
+    {
+      MySqlConnection conn = new MySqlConnection(DBConfiguration.ConnectionString);
+      conn.Open();
 
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = "INSERT INTO food (name, weight, price, category) VALUES (@name, @weight, @price, @category);";
+      cmd.Parameters.AddWithValue("@name", this.Name);
+      cmd.Parameters.AddWithValue("@weight", this.Weight);
+      cmd.Parameters.AddWithValue("@price", this.Price);
+      cmd.Parameters.AddWithValue("@category", this.Category);
+
+      cmd.ExecuteNonQuery();
+      Id = (int)cmd.LastInsertedId;
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+    }
   }
 }

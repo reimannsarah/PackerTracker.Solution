@@ -24,6 +24,7 @@ namespace PackerTracker.Controllers
     public ActionResult Create(string name, float weight, float price, string category)
     {
       Food newFood = new Food(name, weight, price, category);
+      newFood.Save();
       return RedirectToAction("Index");
     }
 

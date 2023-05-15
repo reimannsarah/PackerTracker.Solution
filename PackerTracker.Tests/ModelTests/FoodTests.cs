@@ -35,9 +35,9 @@ namespace PackerTracker.Tests
     [TestMethod]
     public void ReferenceTypes_ReturnsTrueBecauseBothFoodsAreSameReference_bool()
     {
-      Food firstFood = new Food("scruge", 8, 9, "snack");
+      Food firstFood = new Food("scrujj", 8, 9, "snack");
       Food copyOfFirstFood = firstFood;
-      copyOfFirstFood.Name = "scruge";
+      copyOfFirstFood.Name = "scrujj";
       Assert.AreEqual(firstFood.Name, copyOfFirstFood.Name);
     }
 
@@ -48,28 +48,27 @@ namespace PackerTracker.Tests
       Food secondfood = new Food("prankle", 26, 2, "dinner");
       Assert.AreEqual(firstFood, secondfood);
     }
-    // [TestMethod]
-    // public void FoodConstructor_CreatesInstanceOfFood_Food()
-    // {
-    //   Food newFood = new Food("food", 1, 2, "snack");
-    //   Assert.AreEqual(typeof(Food), newFood.GetType());
-    // }
 
-    // [TestMethod]
-    // public void SetDate_AddsADateToAFood_DateOnly()
-    // {
-    //   Food newFood = new Food("food", 1, 2, "snack");
-    //   DateOnly result = new DateOnly(1999, 9, 25);
-    //   DateOnly expected = newFood.SetDate(1999, 9, 25);
-    //   Assert.AreEqual(result, expected);
-    // }
+    [TestMethod]
+    public void Save_SavesToDatabse_FoodList()
+    {
+      Food testFood = new Food("cranjjoexr", 13, 0.2F, "breunlch");
+      testFood.Save();
+      List<Food> result = Food.GetList();
+      List<Food> testList = new List<Food>{testFood};
+      CollectionAssert.AreEqual(testList, result);
+    }
 
-    // [TestMethod]
-    // public void GetList_GetsListOfFoods_List()
-    // {
-    //   Food newFood = new Food("food", 1, 2, "snack");
-    //   List<Food> result = new List<Food> {newFood};
-    //   CollectionAssert.AreEqual(result, Food.GetList());
-    // }
+    [TestMethod]
+    public void GetAll_ReturnsFoods_FoodList()
+    {
+      Food newFood1 = new Food("corn", 69.69F, 1.24F, "snack");
+      Food newFood2 = new Food("scrorn", 3, 5, "breakfast");
+      newFood1.Save();
+      newFood2.Save();
+      List<Food> newFoodList = new List<Food> { newFood1, newFood2 };
+      List<Food> result = Food.GetList();
+      CollectionAssert.AreEqual(newFoodList, result);
+    }
   }
 }
