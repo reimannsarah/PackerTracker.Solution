@@ -19,9 +19,9 @@
       <p>There are no items in your pack.</p>
     }
     <ul>
-      @foreach (Gear gear in Model)
+      @foreach (Food food in Model)
       {
-        <li><a href='/gear/@gear.Id'>@gear.Name</a></li>
+        <li><a href='/gear/@food.Id'>@food.Name</a></li>
       }
     </ul>
 

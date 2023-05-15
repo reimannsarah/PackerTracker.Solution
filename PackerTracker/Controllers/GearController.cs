@@ -34,11 +34,13 @@ namespace PackerTracker.Controllers
     //   return View();
     // }
 
+
+  
     [HttpGet("/gear/{id}")]
     public ActionResult Show(int id)
     {
-      Gear foundGear = Gear.Find(id);
-      return View(foundGear);
+      // Gear foundGear = Gear.Find(id);
+      return View();
     }
   }
 }
